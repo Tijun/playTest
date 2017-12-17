@@ -38,14 +38,14 @@ public class PlayApplicationContext {
     private void bindingInject(){
         final Field [] fields = this.getClass().getDeclaredFields();
         Optional.ofNullable(fields).ifPresent(fieldsList -> {
-            Arrays.asList(fieldsList).stream().filter(x->{ // 找出所有被@Inject 修饰的field
-                Inject inject =  x.getAnnotation(Inject.class);
+            Arrays.asList(fieldsList).stream().filter(field->{ // 找出所有被@Inject 修饰的field
+                Inject inject =  field.getAnnotation(Inject.class);
                 return inject != null;
-            }).forEach(x->{
-                x.setAccessible(true);// 对field 设置private 可访问权限
+            }).forEach(field->{
+                field.setAccessible(true);// 对field 设置private 可访问权限
                 try {
                     startPlay();
-                    x.set(this,app.injector().instanceOf(x.getType()));//使用guice注入实例
+                    field.set(this,app.injector().instanceOf(field.getType()));//使用guice注入实例
                 } catch (IllegalAccessException e) {
                     System.out.println("Inject fail " + e.getMessage());
                 }
