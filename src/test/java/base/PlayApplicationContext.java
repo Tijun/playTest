@@ -2,6 +2,7 @@ package base;
 
 import akka.stream.Materializer;
 import org.junit.After;
+import play.Application;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -15,7 +16,7 @@ import static play.test.Helpers.*;
  */
 public class PlayApplicationContext {
 
-    protected play.Application app;
+    protected Application app;
 
     protected Materializer mat;
 
@@ -34,7 +35,7 @@ public class PlayApplicationContext {
     /**
      * 为测试类 PlayApplicationContext子类的 @Inject修饰属性接口注入实例
      */
-    public void bindingInject(){
+    private void bindingInject(){
         final Field [] fields = this.getClass().getDeclaredFields();
         Optional.ofNullable(fields).ifPresent(fieldsList -> {
             Arrays.asList(fieldsList).stream().filter(x->{ // 找出所有被@Inject 修饰的field
@@ -53,7 +54,10 @@ public class PlayApplicationContext {
 
     }
 
-    public void startPlay() {
+    /**
+     * 如果需要改变application配置时该方法可以被重写
+     */
+    protected void startPlay() {
         app = fakeApplication();
         start(app);
         mat = app.getWrappedApplication().materializer();
