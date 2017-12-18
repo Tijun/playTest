@@ -17,7 +17,7 @@ public class ApplicationServiceTest extends PlayApplicationContext {
     }
 
     @Test
-    public void getAperson(){
+    public void getAperson(){ // this will access db
         System.out.println(applicationService.getPerson());
     }
 
