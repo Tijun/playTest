@@ -16,4 +16,9 @@ public class ApplicationServiceTest extends PlayApplicationContext {
         System.out.println(applicationService.sayHello());
     }
 
+    @Test
+    public void getAperson(){
+        System.out.println(applicationService.getPerson());
+    }
+
 }

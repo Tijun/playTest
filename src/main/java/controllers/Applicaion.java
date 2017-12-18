@@ -1,5 +1,6 @@
 package controllers;
 
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import service.ApplicationService;
@@ -15,6 +16,9 @@ public class Applicaion extends Controller {
         return ok("hello java play");
     }
 
+    public Result getPerson(){
+       return ok(Json.toJson(applicationService.getPerson()));
+    }
     public Result hello(){
         return ok(applicationService.sayHello());
     }
